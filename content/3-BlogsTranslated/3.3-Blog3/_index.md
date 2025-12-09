@@ -1,4 +1,4 @@
----
+﻿---
 title: "Securing VIN with Reference ID on AWS IoT"
 date: "2024-01-01"
 weight: 3

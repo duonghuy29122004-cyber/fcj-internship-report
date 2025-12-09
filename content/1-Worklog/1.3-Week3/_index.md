@@ -1,15 +1,10 @@
----
+﻿---
 title: "Week 3 Worklog"
 date: 2024-01-01T00:00:00+07:00
 weight: 3
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
-
 ### Week 3 Objectives:
 
 * Master Amazon EC2 and its basic features.

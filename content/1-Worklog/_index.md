@@ -1,4 +1,4 @@
----
+﻿---
 title: "Worklog"
 date: 2024-01-01T00:00:00+07:00
 weight: 1
@@ -6,9 +6,7 @@ chapter: false
 pre: " <b> 1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
+
 
 **On this page**, you will find my worklog documenting my AWS learning journey. I completed this program over **12 weeks** (approximately 3 months), systematically learning and practicing AWS services from fundamentals to advanced topics.
 

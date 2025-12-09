@@ -1,16 +1,10 @@
----
+﻿---
 title: "Workshop Business Intelligence with Amazon QuickSight"
 date: 2024-01-01T00:00:00+07:00
 weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
-
-
-
 #### Overview
 
 In this workshop, you will learn how to use Amazon QuickSight, a fast, cloud-powered business intelligence service that makes it easy to deliver insights to everyone in your organization.

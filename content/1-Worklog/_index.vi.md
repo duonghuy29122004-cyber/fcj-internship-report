@@ -1,4 +1,4 @@
----
+﻿---
 title: "Nhật ký công việc"
 date: 2024-01-01T00:00:00+07:00
 weight: 1
@@ -6,9 +6,7 @@ chapter: false
 pre: " <b> 1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+
 
 **Trong trang này** bạn sẽ tìm thấy nhật ký công việc ghi lại hành trình học AWS của tôi. Tôi đã hoàn thành chương trình này trong **12 tuần** (khoảng 3 tháng), học và thực hành các dịch vụ AWS một cách có hệ thống từ cơ bản đến nâng cao.
 

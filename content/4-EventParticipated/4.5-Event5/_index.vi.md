@@ -1,14 +1,10 @@
----
+﻿---
 title : "Hội nghị AWS GenAI"
 date: 2024-01-01T00:00:00+07:00 
 weight : 5 
 chapter : false
 pre : " <b> 4.5. </b> "
 ---
-
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 # Hội nghị AWS GenAI
 ## Giải pháp và Ứng dụng Generative AI

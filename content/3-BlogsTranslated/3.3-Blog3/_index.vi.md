@@ -1,4 +1,4 @@
----
+﻿---
 title: "Bảo Mật VIN với Reference ID trên AWS IoT"
 date: "2024-01-01"
 weight: 3

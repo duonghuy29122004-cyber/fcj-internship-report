@@ -1,14 +1,10 @@
----
+﻿---
 title : "AWS Cloud Mastery Series #1"
 date: 2024-01-01T00:00:00+07:00 
 weight : 1 
 chapter : false
 pre : " <b> 4.1. </b> "
 ---
-
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
 # AWS Cloud Mastery Series #1
 ## AI/ML/GenAI on AWS

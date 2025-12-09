@@ -1,15 +1,10 @@
----
+﻿---
 title: "Week 8 Worklog"
 date: 2024-01-01T00:00:00+07:00
 weight: 8
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
-
 ### Week 8 Objectives:
 
 * Understand CloudFront, Global Accelerator and AWS Storage Extras.

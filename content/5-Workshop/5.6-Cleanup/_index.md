@@ -1,4 +1,4 @@
----
+﻿---
 title: "Clean up"
 date: "2025-12-02"
 weight: 6

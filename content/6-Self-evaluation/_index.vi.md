@@ -1,14 +1,10 @@
----
+﻿---
 title: "Tự đánh giá"
 date: "2024-01-01"
 weight: 6
 chapter: false
 pre: " <b> 6. </b> "
 ---
-
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 Trong suốt thời gian thực tập tại **Amazon Web Services Vietnam** từ **08/09/2025** đến **12/12/2025**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức về AI/ML vào môi trường làm việc thực tế với các dịch vụ AWS tiên tiến.
 

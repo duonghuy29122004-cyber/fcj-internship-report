@@ -1,4 +1,4 @@
----
+﻿---
 title: "Framework Quan Sát Hiện Đại cho SAP"
 date: "2024-01-01"
 weight: 2
