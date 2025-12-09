@@ -1,126 +1,179 @@
 ---
-title: "Blog 3"
+title: "Securing VIN with Reference ID on AWS IoT"
 date: "2024-01-01"
-weight: 1
+weight: 3
 chapter: false
-pre: " <b> 3.3. </b> "
----
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
-
-# Getting Started with Healthcare Data Lakes: Using Microservices
-
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
-
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
-
+pre: " <b> 3.3 </b> "
 ---
 
-## Architecture Guidance
+## Securing Vehicle Identification Number (VIN) with Reference ID in Connected Vehicle Platform on AWS IoT
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+### Introduction
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+With over 470 million connected cars expected by the end of 2025, protecting sensitive vehicle data, especially Vehicle Identification Numbers (VIN), has become critically important for automotive manufacturers. VINs serve as unique identifiers throughout automotive processes, from manufacturing to maintenance, making them attractive targets for cybercriminals.
+![Architecture](/images/blog3.png)
+### The Problem
 
-**The solution architecture is now as follows:**
+VINs contain critical vehicle information (manufacturer, model, year) and can be linked to personal data. Unprotected VINs in cloud environments risk:
 
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+- Identity theft
+- Vehicle theft
+- Insurance fraud
+- Privacy violations
+- Regulatory non-compliance (GDPR, CCPA)
+
+### Solution: Reference ID
+
+This solution introduces **Reference ID** as a pseudonym for VIN, enabling secure vehicle data interaction without exposing actual VINs.
+
+#### How It Works
+
+The system uses Reference ID, where each vehicle receives a unique identifier (UUID) during provisioning, acting as a VIN proxy in all platform interactions. The vehicle registry database stores both hashed and encrypted versions of the VIN, mapped to the Reference ID.
+
+VINs are encrypted using AWS Key Management Service (KMS) as a safeguard. When plain-text VIN retrieval is needed, this value can be decrypted, ensuring the actual VIN is only accessible when truly necessary.
+
+#### Benefits
+
+- Acts as VIN proxy, enhancing security and data minimization
+- Supports compliance with data protection regulations
+- Provides flexible access control
+- Improved auditability
+- Scalability for large fleets
+- Easier system interoperability
+- Enables revocation without changing underlying VIN
+
+## System Architecture
+
+### 1. Reference ID
+
+Reference ID is a UUID generated during vehicle provisioning, serving as a VIN proxy throughout the vehicle's lifecycle, creating an abstraction layer protecting sensitive VIN data.
+
+### 2. Vehicle Registry Database
+
+The vehicle registry database serves as a centralized repository for vehicle information. Key features:
+
+- Reference ID to hashed VIN mapping
+- Encrypted VIN storage
+- Vehicle provisioning and state change tracking
+- Device change history
+- Vehicle attributes and configuration
+
+**Database Structure:**
+- `referenceId` – Partition key
+- `deviceId` – Global secondary index
+- `hashedVin` – Global secondary index
+- `tenantId`
+- `encryptedVin`
+
+### 3. Vehicle Provisioning Process
+
+#### 3.1 Data Validation
+1. Provisioning infrastructure hashes VIN and queries database for first-time provisioning check
+2. For new vehicles, DEVICE_ID validated based on TCU manufacturer data
+3. Checks if DEVICE_ID already attached to another vehicle
+
+#### 3.2 Reference ID Generation
+1. Query database to validate if vehicle already provisioned
+2. If not, generate new UUID as Reference ID
+3. Store Reference ID, hashed VIN, and encrypted VIN (via KMS)
+4. Ensure UUID uniqueness
+
+#### 3.3 Certificate Generation
+- Certificate generated using ACM PCA with Common Name = Reference ID
+
+#### 3.4 AWS IoT Integration
+1. Create AWS IoT Thing with Thing Name = Reference ID
+2. Create AWS IoT FleetWise Vehicle with Vehicle Name = Reference ID
+
+#### 3.5 Response
+- Vehicle receives Certificate and Reference ID
+- Vehicle connects to AWS IoT FleetWise using certificate and ClientId = ReferenceID
+
+### 4. Data Collection and Storage
+
+#### 4.1 Vehicle to AWS IoT FleetWise
+- Vehicle connects using Reference ID as Client ID
+- All data associated with Reference ID
+
+#### 4.2 AWS IoT FleetWise to Data Platform
+- Data enriched with Vehicle Name (Reference ID)
+
+#### 4.3 Storage and Retrieval
+- Data stored with Reference ID as identifier
+- Mobile app queries via API Platform using Reference ID
+
+### 5. Customer Application Interaction
+
+#### 5.1 VIN to Reference ID Conversion
+1. After ownership verification, client app calls API for conversion
+2. API queries database to retrieve corresponding Reference ID
+3. Reference ID returned to application
+
+**Security Considerations:**
+- Strict access control via authentication and authorization
+- Log all conversion requests
+- Rate limiting and DoS/DDoS protection
+- Limit access to authorized applications
+
+#### 5.2 Using Reference ID
+After obtaining Reference ID, application can:
+1. Retrieve data from data platform
+2. Perform direct vehicle operations (remote commands)
+
+### 6. Telematics Control Unit (TCU) Change
+
+#### 6.1 Update TCU
+**Input:** Hashed VIN (or Reference ID), current DEVICE_ID, new DEVICE_ID
+
+**Process:**
+1. Verify hashed VIN and current DEVICE_ID
+2. Check new DEVICE_ID not linked to another vehicle
+3. Update DEVICE_ID in database
+4. Revoke and delete current certificate
+5. New TCU undergoes provisioning process
+
+#### 6.2 Remove TCU
+**Input:** Hashed VIN (or Reference ID), current DEVICE_ID
+
+**Process:**
+1. Verify hashed VIN and DEVICE_ID
+2. Remove DEVICE_ID from database
+3. Revoke and delete certificate
+
+## Security and Performance Considerations
+
+### Security
+- Minimizes VIN exposure risk in daily operations
+- Only stores hashed and encrypted VINs
+- AWS KMS encryption
+- Strict access control policies
+
+### Performance and Scalability
+- Efficient UUID generation technology
+- DynamoDB Global Secondary Indexes for fast queries
+- Scalability for large fleets
+
+### Future
+- Blockchain or distributed ledger integration
+- Advanced analytics and machine learning
+- Continuous GDPR and CCPA compliance
+
+## Conclusion
+
+The Reference ID system helps automotive manufacturers enhance VIN security in connected vehicle platforms on AWS. This architecture:
+
+- Protects sensitive vehicle data
+- Maintains full functionality
+- Scales efficiently
+- Meets compliance standards
+- Provides flexible framework for vehicle identity management
+
+As connected vehicle numbers continue to grow, robust security measures become critically important. This system not only protects VINs but also helps meet data protection requirements.
+
+You should explore how to apply this approach to your connected vehicle solutions. For more information about AWS IoT services and connected vehicle best practices, visit the AWS IoT FleetWise documentation and related blog posts.
 
 ---
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
-
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
-
----
-
-## Technology Choices and Communication Scope
-
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
-
----
-
-## The Pub/Sub Hub
-
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
-
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
-
----
-
-## Core Microservice
-
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
-
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
-
----
-
-## Front Door Microservice
-
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
-
----
-
-## Staging ER7 Microservice
-
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
-
----
-
-## New Features in the Solution
-
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+**Source:** AWS Blog  
+**Date:** September 10, 2025  
+**Translated by:** Duong Nguyen Gia Huy

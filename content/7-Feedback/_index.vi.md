@@ -14,31 +14,45 @@ pre: " <b> 7. </b> "
 ### Đánh giá chung
 
 **1. Môi trường làm việc**  
-Môi trường làm việc rất thân thiện và cởi mở. Các thành viên trong FCJ luôn sẵn sàng hỗ trợ khi mình gặp khó khăn, kể cả ngoài giờ làm việc. Không gian làm việc gọn gàng, thoải mái, giúp mình tập trung tốt hơn. Tuy nhiên, mình nghĩ có thể bổ sung thêm một số buổi giao lưu hoặc team bonding để mọi người hiểu nhau hơn.
+Môi trường làm việc tại AWS rất chuyên nghiệp và năng động. Team luôn sẵn sàng hỗ trợ khi mình gặp khó khăn với các technical issues. Không gian làm việc được trang bị đầy đủ công cụ và tài nguyên AWS để mình có thể thử nghiệm và phát triển.
 
 **2. Sự hỗ trợ của mentor / team admin**  
-Mentor hướng dẫn rất chi tiết, giải thích rõ ràng khi mình chưa hiểu và luôn khuyến khích mình đặt câu hỏi. Team admin hỗ trợ các thủ tục, tài liệu và tạo điều kiện để mình làm việc thuận lợi. Mình đánh giá cao việc mentor cho phép mình thử và tự xử lý vấn đề thay vì chỉ đưa đáp án.
+Mentor có kiến thức sâu về AWS services, hướng dẫn mình từ kiến trúc tổng thể. Đặc biệt, mentor luôn khuyến khích mình tự research và đề xuất giải pháp trước khi hỏi, giúp mình phát triển tư duy độc lập. Team admin hỗ trợ rất tốt về AWS account setup, permissions.
 
 **3. Sự phù hợp giữa công việc và chuyên ngành học**  
-Công việc mình được giao phù hợp với kiến thức mình đã học ở trường, đồng thời mở rộng thêm những mảng mới mà mình chưa từng được tiếp cận. Nhờ vậy, mình vừa củng cố kiến thức nền tảng, vừa học thêm kỹ năng thực tế.
+Dự án Document QA với AWS Bedrock  rất phù hợp với chuyên ngành AI của mình. Mình được áp dụng kiến thức về NLP, embeddings, và machine learning vào thực tế. Đồng thời, mình học thêm về cloud architecture, serverless computing, và production-grade AI systems - những kiến thức quan trọng mà trường không dạy chi tiết.
 
 **4. Cơ hội học hỏi & phát triển kỹ năng**  
-Trong quá trình thực tập, mình học được nhiều kỹ năng mới như sử dụng công cụ quản lý dự án, kỹ năng làm việc nhóm, và cả cách giao tiếp chuyên nghiệp trong môi trường công ty. Mentor cũng chia sẻ nhiều kinh nghiệm thực tế giúp mình định hướng tốt hơn cho sự nghiệp.
+Được tham gia 10 tuần workshops với các dịch vụ AWS, từ cơ bản đến nâng cao. Đặc biệt được tham gia 5 events chất lượng cao từ AWS (Vietnam Cloud Day, Cloud Mastery Series), học trực tiếp từ Solutions Architects và chuyên gia. Mentor chia sẻ nhiều kinh nghiệm thực tế giúp định hướng career path trong Cloud Computing.
 
 **5. Văn hóa & tinh thần đồng đội**  
-Văn hóa công ty rất tích cực: mọi người tôn trọng lẫn nhau, làm việc nghiêm túc nhưng vẫn vui vẻ. Khi có dự án gấp, mọi người cùng nhau cố gắng, hỗ trợ không phân biệt vị trí. Điều này giúp mình cảm thấy mình là một phần của tập thể, dù chỉ là thực tập sinh.
+Văn hóa công ty rất tích cực, mọi người tôn trọng lẫn nhau, làm việc nghiêm túc nhưng vẫn vui vẻ. Được networking với AWS community tại Việt Nam qua các events. Điều này giúp cảm thấy là một phần của cộng đồng cloud lớn hơn, không chỉ là thực tập sinh.
 
 **6. Chính sách / phúc lợi cho thực tập sinh**  
-Công ty có hỗ trợ phụ cấp thực tập và tạo điều kiện về thời gian linh hoạt khi cần thiết. Ngoài ra, việc được tham gia các buổi đào tạo nội bộ là một điểm cộng lớn.
+Được tham gia miễn phí các events từ AWS, thời gian làm việc linh hoạt, môi trường học tập với đầy đủ resources. Có thể xem xét hỗ trợ thêm AWS credits cho thực tập sinh thực hành.
+
 
 
 ### Một số câu hỏi khác
-- Điều bạn **hài lòng nhất** trong thời gian thực tập?  
-- Điều bạn nghĩ công ty **cần cải thiện** cho các thực tập sinh sau?  
-- Nếu giới thiệu cho bạn bè, bạn có **khuyên họ thực tập ở đây không**? Vì sao?  
 
+**Điều bạn hài lòng nhất trong thời gian thực tập?**  
+ Tham gia 5 events chất lượng cao từ AWS, học trực tiếp từ các chuyên gia. Hoàn thành 10 tuần workshops giúp có cái nhìn toàn diện về hệ sinh thái AWS.
+
+**Điều bạn nghĩ công ty cần cải thiện cho các thực tập sinh sau?**  
+- Cung cấp checklist các kỹ năng cần đạt được sau mỗi giai đoạn
+- Cung cấp learning path cụ thể cho từng technical domain (AI/ML, Backend, DevOps...)
+
+**Nếu giới thiệu cho bạn bè, bạn có khuyên họ thực tập ở đây không? Vì sao?**  
+Chắc chắn có! mentor tận tâm và có chuyên môn cao, có cơ hội tham gia các events chất lượng của AWS
 
 ### Đề xuất & mong muốn
-- Bạn có đề xuất gì để cải thiện trải nghiệm trong kỳ thực tập?  
-- Bạn có muốn tiếp tục chương trình này trong tương lai?
-- Góp ý khác (tự do chia sẻ):
+
+**Đề xuất để cải thiện trải nghiệm thực tập:**
+- Tạo một "starter project" nhỏ để intern làm quen với AWS services trước khi vào project chính
+
+
+**Bạn có muốn tiếp tục chương trình này trong tương lai?**  
+Có, mình muốn tiếp tục làm việc với AWS, đặc biệt trong lĩnh vực AI/ML
+
+**Góp ý khác:**  
+Cảm ơn team FCJ và AWS đã tạo cơ hội tuyệt vời này. Mình đã học được rất nhiều không chỉ về technical skills mà còn về cách làm việc chuyên nghiệp trong một công ty công nghệ hàng đầu thế giới. Hy vọng chương trình sẽ tiếp tục phát triển và tạo cơ hội cho nhiều sinh viên Việt Nam hơn nữa!

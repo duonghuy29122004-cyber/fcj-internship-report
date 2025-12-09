@@ -10,31 +10,41 @@ pre: " <b> 6. </b> "
 ⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
 {{% /notice %}}
 
-Trong suốt thời gian thực tập tại **[Tên công ty/tổ chức]** từ **[ngày bắt đầu]** đến **[ngày kết thúc]**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.  
-Tôi đã tham gia **[mô tả ngắn gọn dự án hoặc công việc chính]**, qua đó cải thiện kỹ năng **[liệt kê kỹ năng: lập trình, phân tích, viết báo cáo, giao tiếp…]**.  
+Trong suốt thời gian thực tập tại **Amazon Web Services Vietnam** từ **08/09/2025** đến **12/12/2025**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức về AI/ML vào môi trường làm việc thực tế với các dịch vụ AWS tiên tiến.
 
-Về tác phong, tôi luôn cố gắng hoàn thành tốt nhiệm vụ, tuân thủ nội quy, và tích cực trao đổi với đồng nghiệp để nâng cao hiệu quả công việc.
+Tôi đã tham gia phát triển **hệ thống RAG (Retrieval-Augmented Generation) sử dụng Amazon Bedrock**.
+Qua dự án này, tôi đã cải thiện đáng kể các kỹ năng: **lập trình Python, kiến trúc serverless, AI/ML engineering, xử lý ngôn ngữ tự nhiên, và làm việc với AWS services**.
+
+Về tác phong, tôi luôn cố gắng hoàn thành tốt nhiệm vụ, chủ động tìm hiểu công nghệ mới, và tích cực trao đổi với team để nâng cao hiệu quả công việc.
 
 Để phản ánh một cách khách quan quá trình thực tập, tôi xin tự đánh giá bản thân dựa trên các tiêu chí dưới đây:
 
 
 | STT | Tiêu chí                            | Mô tả                                                                                            | Tốt | Khá | Trung bình |
 | --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | --- | --- | ---------- |
-| 1   | **Kiến thức và kỹ năng chuyên môn** | Hiểu biết về ngành, áp dụng kiến thức vào thực tế, kỹ năng sử dụng công cụ, chất lượng công việc | ✅   | ☐   | ☐          |
-| 2   | **Khả năng học hỏi**                | Tiếp thu kiến thức mới, học hỏi nhanh                                                            | ☐   | ✅   | ☐          |
-| 3   | **Chủ động**                        | Tự tìm hiểu, nhận nhiệm vụ mà không chờ chỉ dẫn                                                  | ✅   | ☐   | ☐          |
-| 4   | **Tinh thần trách nhiệm**           | Hoàn thành công việc đúng hạn, đảm bảo chất lượng                                                | ✅   | ☐   | ☐          |
-| 5   | **Kỷ luật**                         | Tuân thủ giờ giấc, nội quy, quy trình làm việc                                                   | ☐   | ☐   | ✅          |
-| 6   | **Tính cầu tiến**                   | Sẵn sàng nhận feedback và cải thiện bản thân                                                     | ☐   | ✅   | ☐          |
-| 7   | **Giao tiếp**                       | Trình bày ý tưởng, báo cáo công việc rõ ràng                                                     | ☐   | ✅   | ☐          |
-| 8   | **Hợp tác nhóm**                    | Làm việc hiệu quả với đồng nghiệp, tham gia nhóm                                                 | ✅   | ☐   | ☐          |
-| 9   | **Ứng xử chuyên nghiệp**            | Tôn trọng đồng nghiệp, đối tác, môi trường làm việc                                              | ✅   | ☐   | ☐          |
-| 10  | **Tư duy giải quyết vấn đề**        | Nhận diện vấn đề, đề xuất giải pháp, sáng tạo                                                    | ☐   | ✅   | ☐          |
-| 11  | **Đóng góp vào dự án/tổ chức**      | Hiệu quả công việc, sáng kiến cải tiến, ghi nhận từ team                                         | ✅   | ☐   | ☐          |
+| 1   | **Kiến thức và kỹ năng chuyên môn** | Hiểu biết về AI/ML, AWS services, áp dụng kiến thức vào RAG pipeline, kỹ năng backend development | ✅   | ☐   | ☐          |
+| 2   | **Khả năng học hỏi**                | Tiếp thu nhanh công nghệ mới (Bedrock, RAG, embeddings), tự học qua documentation                | ✅   | ☐   | ☐          |
+| 3   | **Chủ động**                        | Tự research  cho RAG, đề xuất giải pháp chunking và embedding                      | ✅   | ☐   | ☐          |
+| 4   | **Tinh thần trách nhiệm**           | Hoàn thành các module Lambda và integration đúng timeline, đảm bảo code quality                  | ✅   | ☐   | ☐          |
+| 5   | **Kỷ luật**                         | Tuân thủ giờ giấc, quy trình code review, AWS                                      | ☐   | ✅   | ☐          |
+| 6   | **Tính cầu tiến**                   | Sẵn sàng nhận feedback về code, cải thiện performance của RAG pipeline                            | ✅   | ☐   | ☐          |
+| 7   | **Giao tiếp**                       | Trình bày technical design, báo cáo tiến độ và vấn đề gặp phải rõ ràng                           | ☐   | ✅   | ☐          |
+| 8   | **Hợp tác nhóm**                    | Làm việc hiệu quả với team, integrate code với các components khác                               | ✅   | ☐   | ☐          |
+| 9   | **Ứng xử chuyên nghiệp**            | Tôn trọng đồng nghiệp, tuân thủ security và compliance guidelines                                | ✅   | ☐   | ☐          |
+| 10  | **Tư duy giải quyết vấn đề**        | Debug issues với embeddings, optimize chunking strategy, troubleshoot Lambda errors              | ✅   | ☐   | ☐          |
+| 11  | **Đóng góp vào dự án/tổ chức**      | Xây dựng thành công RAG pipeline, đóng góp vào knowledge base architecture                       | ✅   | ☐   | ☐          |
 | 12  | **Tổng thể**                        | Đánh giá chung về toàn bộ quá trình thực tập                                                     | ✅   | ☐   | ☐          |
+
+### Điểm mạnh
+
+* **Kỹ năng technical**: Nắm vững được kiến trúc RAG, cách tích hợp Bedrock và xử lý embeddings
+* **Tư duy giải quyết vấn đề**: Có khả năng debug và optimize performance của AI pipeline
+* **Chủ động học hỏi**: Tự research và áp dụng cho document chunking và retrieval
+* **Làm việc nhóm**: Phối hợp tốt với team trong việc integrate các components
 
 ### Cần cải thiện
 
-* Nâng cao tính kỹ luật, chấp hành nghiêm chỉnh nội quy của công ty hoặc bất kỳ trong một tổ chức nào
-* Cải thiện trong cách tư duy giải quyết vấn đề
-* Học cách giao tiếp tốt hơn trong giao tiếp hằng ngày và trong công việc, xử lý tình huống
+* **Kỹ luật và quy trình**: Cần tuân thủ chặt chẽ hơn các quy trình code review và testing
+* **Kỹ năng giao tiếp**: Cải thiện khả năng present technical concepts cho non-technical stakeholders
+* **Kiến thức về production**: Tìm hiểu thêm về monitoring, logging và troubleshooting trong môi trường production
+* **Tối ưu hóa chi phí**: Học cách optimize AWS costs khi làm việc với Bedrock và Lambda

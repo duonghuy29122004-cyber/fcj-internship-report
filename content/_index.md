@@ -17,7 +17,7 @@ chapter: false
 
 &emsp; **Phone Number:** 0939007645 
 
-&emsp; **Email:** Huydngse182202@fpt.edu.vn
+&emsp; **Email:** huydngse182202@fpt.edu.vn
 
 &emsp; **University:** FPT University
 

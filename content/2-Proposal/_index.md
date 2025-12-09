@@ -16,7 +16,7 @@ The Document QA system is a serverless application designed to revolutionize how
 
 ### 2. Problem Statement
 
-### What’s the Problem?
+### What's the Problem?
 
 Traditional document search methods (keyword matching) often fail to capture context or semantic meaning. Manual document review is time-consuming, error-prone, and inefficient, especially for large volumes of text. Users struggle to extract specific insights quickly, leading to productivity bottlenecks.
 
@@ -117,3 +117,73 @@ The platform employs a modern serverless architecture to ensure scalability, sec
 
 - A reusable RAG framework for future knowledge base applications.
 - Significant productivity gains for users needing quick information retrieval.
+
+
+### 9. Team Structure and Responsibilities
+
+| Name | Student ID | Primary Role | Email/Contact Info |
+|------|-----------|--------------|-------------------|
+| **Nguyễn Lê Anh Quân** | SE192307 | Team Leader/ Cloud Architect | nguyenleanhquan2005@gmail.com |
+| **Đào Quang Vinh** | SE180012 | Project Manager/ Backend Developer (Bedrock, RAG) | its.vnhdq@gmail.com |
+| **Nguyễn Thanh Liêm** | SE184163 | Backend Developer | liemntse184163@fpt.edu.vn |
+| **Trần Đình Phong** | SE184217 | Frontend Developer/ UI/UX Designer | phongtdse184217@fpt.edu.vn |
+| **Dương Nguyễn Gia Huy** | SE182202 | QA Engineer/Backend Developer (Bedrock, RAG) | huydngse182202@fpt.edu.vn |
+
+
+####  Detailed Responsibilities by Team Member
+
+##### Nguyễn Lê Anh Quân - Cloud Architect/ Team Leader
+**Primary Responsibilities:**
+- AWS architecture design and service selection
+- Infrastructure planning and optimization
+- Security architecture and IAM policies
+- Technical consultation and best practices
+
+---
+
+##### Đào Quang Vinh - Project Manager/Backend Developer
+**Primary Responsibilities:**
+- Overall project management and timeline coordination
+- Team coordination and task assignment
+- Progress reporting to instructor/advisor
+- Risk management and mitigation strategies
+- Documentation oversight and quality assurance
+- Build vector search and retrieval logic
+- Develop chat/query handler Lambda function
+
+
+##### Dương Nguyễn Gia Huy - QA Engineer/Backend Developer
+**Primary Responsibilities:**
+- Core backend logic development
+- Amazon Bedrock integration (Foundation Models)
+- RAG (Retrieval-Augmented Generation) pipeline implementation
+- Develop Lambda function for document ingestion
+- Integrate Amazon Bedrock Knowledge Bases
+- Implement text chunking and embedding generation
+
+---
+
+##### Nguyễn Thanh Liêm - Backend Developer 
+**Primary Responsibilities:**
+- Backend infrastructure and data management
+- CI/CD pipeline development
+- System monitoring and logging
+- Performance optimization
+- DynamoDB schema design and implementation
+- Conversation history storage logic
+
+---
+
+##### Trần Đình Phong - Frontend Developer
+**Primary Responsibilities:**
+- User interface design and development
+- Frontend-backend integration
+- User experience optimization
+- Responsive design implementation
+- Implement file upload interface with drag-and-drop
+- Connect frontend to API Gateway endpoints
+- Handle API responses and error states
+- Deploy frontend to S3 + CloudFront
+
+---
+

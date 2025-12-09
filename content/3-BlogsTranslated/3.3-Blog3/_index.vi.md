@@ -1,127 +1,179 @@
 ---
-title: "Blog 3"
+title: "Bảo Mật VIN với Reference ID trên AWS IoT"
 date: "2024-01-01"
-weight: 1
+weight: 3
 chapter: false
-pre: " <b> 3.3. </b> "
+pre: " <b> 3.3 </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+## Bảo Mật Số Nhận Dạng Xe (VIN) với ID Tham Chiếu trong Nền Tảng Xe Kết Nối AWS IoT
 
-# Bắt đầu với healthcare data lakes: Sử dụng microservices
+### Giới thiệu
 
-Các data lake có thể giúp các bệnh viện và cơ sở y tế chuyển dữ liệu thành những thông tin chi tiết về doanh nghiệp và duy trì hoạt động kinh doanh liên tục, đồng thời bảo vệ quyền riêng tư của bệnh nhân. **Data lake** là một kho lưu trữ tập trung, được quản lý và bảo mật để lưu trữ tất cả dữ liệu của bạn, cả ở dạng ban đầu và đã xử lý để phân tích. data lake cho phép bạn chia nhỏ các kho chứa dữ liệu và kết hợp các loại phân tích khác nhau để có được thông tin chi tiết và đưa ra các quyết định kinh doanh tốt hơn.
+Với hơn 470 triệu ô tô kết nối dự kiến vào cuối năm 2025, việc bảo vệ dữ liệu xe nhạy cảm, đặc biệt là Số Nhận dạng Xe (VIN), đã trở nên vô cùng quan trọng đối với các nhà sản xuất ô tô. VIN đóng vai trò là mã định danh duy nhất trong các quy trình sản xuất ô tô, từ sản xuất đến bảo dưỡng, khiến chúng trở thành mục tiêu hấp dẫn đối với tội phạm mạng.
+![Architecture](/images/blog3.png)
+### Vấn đề
 
-Bài đăng trên blog này là một phần của loạt bài lớn hơn về việc bắt đầu cài đặt data lake dành cho lĩnh vực y tế. Trong bài đăng blog cuối cùng của tôi trong loạt bài, *“Bắt đầu với data lake dành cho lĩnh vực y tế: Đào sâu vào Amazon Cognito”*, tôi tập trung vào các chi tiết cụ thể của việc sử dụng Amazon Cognito và Attribute Based Access Control (ABAC) để xác thực và ủy quyền người dùng trong giải pháp data lake y tế. Trong blog này, tôi trình bày chi tiết cách giải pháp đã phát triển ở cấp độ cơ bản, bao gồm các quyết định thiết kế mà tôi đã đưa ra và các tính năng bổ sung được sử dụng. Bạn có thể truy cập các code samples cho giải pháp tại Git repo này để tham khảo.
+Số VIN chứa thông tin quan trọng về xe (nhà sản xuất, mẫu xe, năm sản xuất) và có thể được liên kết với dữ liệu cá nhân. Số VIN không được bảo vệ trong môi trường đám mây có nguy cơ:
+
+- Đánh cắp danh tính
+- Trộm cắp xe
+- Gian lận bảo hiểm
+- Vi phạm quyền riêng tư
+- Không tuân thủ quy định (GDPR, CCPA)
+
+### Giải pháp: Reference ID
+
+Giải pháp này giới thiệu **ID Tham chiếu** dưới dạng mã hiệu cho VIN, giúp tương tác dữ liệu xe an toàn mà không làm lộ VIN thực tế.
+
+#### Cách Hoạt Động
+
+Hệ thống sử dụng ID Tham chiếu, trong đó mỗi xe nhận được một mã định danh duy nhất (UUID) trong quá trình cung cấp, hoạt động như proxy VIN trong mọi tương tác nền tảng. Cơ sở dữ liệu đăng ký xe lưu trữ cả phiên bản băm và mã hóa của VIN, được ánh xạ với ID Tham chiếu.
+
+VIN được mã hóa bằng AWS Key Management Service (KMS) như một biện pháp phòng ngừa. Khi cần truy xuất VIN dạng văn bản thuần túy, có thể giải mã giá trị này, đảm bảo VIN thực tế chỉ truy cập được khi thực sự cần thiết.
+
+#### Lợi Ích
+
+- Hoạt động như proxy cho VIN, tăng cường bảo mật và giảm thiểu dữ liệu
+- Hỗ trợ tuân thủ các quy định bảo vệ dữ liệu
+- Cung cấp khả năng kiểm soát truy cập linh hoạt
+- Khả năng kiểm toán được cải thiện
+- Khả năng mở rộng cho đội xe lớn
+- Khả năng tương tác hệ thống dễ dàng hơn
+- Cho phép thu hồi mà không cần thay đổi VIN cơ bản
+
+## Kiến Trúc Hệ Thống
+
+### 1. Reference ID
+
+ID tham chiếu là UUID được tạo trong quá trình cung cấp xe, đóng vai trò là proxy VIN trong suốt vòng đời của xe, tạo ra lớp trừu tượng bảo vệ dữ liệu VIN nhạy cảm.
+
+### 2. Cơ Sở Dữ Liệu Đăng Ký Xe
+
+Cơ sở dữ liệu đăng ký xe đóng vai trò là kho lưu trữ tập trung thông tin về xe. Các tính năng chính:
+
+- ID tham chiếu đến ánh xạ VIN băm
+- Lưu trữ VIN được mã hóa
+- Cung cấp phương tiện và theo dõi thay đổi trạng thái
+- Lịch sử thay đổi thiết bị
+- Thuộc tính và cấu hình xe
+
+**Cấu trúc Database:**
+- `referenceId` – Khóa phân vùng
+- `deviceId` – Chỉ mục phụ toàn cầu
+- `hashedVin` – Chỉ số thứ cấp toàn cầu
+- `tenantId`
+- `encryptedVin`
+
+### 3. Quy Trình Cung Cấp Xe
+
+#### 3.1 Xác thực dữ liệu
+1. Cơ sở hạ tầng cung cấp băm VIN và truy vấn database để kiểm tra lần cung cấp đầu tiên
+2. Đối với xe mới, DEVICE_ID được xác thực dựa trên dữ liệu từ nhà sản xuất TCU
+3. Kiểm tra xem DEVICE_ID đã được gắn vào xe khác chưa
+
+#### 3.2 Tạo Reference ID
+1. Truy vấn database để xác thực xe đã được cung cấp chưa
+2. Nếu chưa, tạo UUID mới làm Reference ID
+3. Lưu trữ Reference ID, VIN băm và VIN mã hóa (qua KMS)
+4. Đảm bảo tính duy nhất của UUID
+
+#### 3.3 Tạo chứng chỉ
+- Chứng chỉ được tạo bằng ACM PCA với Common Name = Reference ID
+
+#### 3.4 Tích hợp AWS IoT
+1. Tạo AWS IoT Thing với Thing Name = Reference ID
+2. Tạo AWS IoT FleetWise Vehicle với Vehicle Name = Reference ID
+
+#### 3.5 Phản hồi
+- Xe nhận được Certificate và Reference ID
+- Xe kết nối với AWS IoT FleetWise bằng certificate và ClientId = ReferenceID
+
+### 4. Thu Thập và Lưu Trữ Dữ Liệu
+
+#### 4.1 Xe đến AWS IoT FleetWise
+- Xe kết nối bằng Reference ID làm Client ID
+- Mọi dữ liệu được liên kết với Reference ID
+
+#### 4.2 AWS IoT FleetWise đến Data Platform
+- Dữ liệu được bổ sung thêm Vehicle Name (Reference ID)
+
+#### 4.3 Lưu trữ và truy xuất
+- Dữ liệu được lưu trữ với Reference ID làm identifier
+- Ứng dụng mobile truy vấn qua API Platform bằng Reference ID
+
+### 5. Tương Tác Ứng Dụng Khách Hàng
+
+#### 5.1 Chuyển đổi VIN sang Reference ID
+1. Sau khi xác minh quyền sở hữu, ứng dụng gọi API để chuyển đổi
+2. API truy vấn database để lấy Reference ID tương ứng
+3. Reference ID được trả về cho ứng dụng
+
+**Cân nhắc bảo mật:**
+- Kiểm soát truy cập chặt chẽ qua authentication và authorization
+- Ghi log tất cả yêu cầu chuyển đổi
+- Rate limiting và bảo vệ chống DoS/DDoS
+- Giới hạn quyền truy cập cho ứng dụng được ủy quyền
+
+#### 5.2 Sử dụng Reference ID
+Sau khi có Reference ID, ứng dụng có thể:
+1. Truy xuất dữ liệu từ data platform
+2. Thực hiện thao tác trực tiếp trên xe (remote commands)
+
+### 6. Thay Đổi Bộ Điều Khiển Telematics (TCU)
+
+#### 6.1 Cập nhật TCU
+**Input:** VIN băm (hoặc Reference ID), DEVICE_ID hiện tại, DEVICE_ID mới
+
+**Quy trình:**
+1. Xác minh VIN băm và DEVICE_ID hiện tại
+2. Kiểm tra DEVICE_ID mới chưa liên kết với xe khác
+3. Cập nhật DEVICE_ID trong database
+4. Thu hồi và xóa certificate hiện tại
+5. TCU mới trải qua quy trình provisioning
+
+#### 6.2 Xóa TCU
+**Input:** VIN băm (hoặc Reference ID), DEVICE_ID hiện tại
+
+**Quy trình:**
+1. Xác minh VIN băm và DEVICE_ID
+2. Xóa DEVICE_ID khỏi database
+3. Thu hồi và xóa certificate
+
+## Cân Nhắc Bảo Mật và Hiệu Suất
+
+### Bảo mật
+- Giảm thiểu rủi ro lộ VIN trong hoạt động hàng ngày
+- Chỉ lưu trữ VIN đã băm và mã hóa
+- Mã hóa AWS KMS
+- Chính sách kiểm soát truy cập nghiêm ngặt
+
+### Hiệu suất và Khả năng mở rộng
+- Công nghệ tạo UUID hiệu quả
+- Global Secondary Indexes từ DynamoDB cho truy vấn nhanh
+- Khả năng mở rộng cho đội xe lớn
+
+### Tương lai
+- Tích hợp blockchain hoặc distributed ledger
+- Phân tích nâng cao và machine learning
+- Tuân thủ liên tục GDPR và CCPA
+
+## Kết Luận
+
+Hệ thống Reference ID giúp các nhà sản xuất ô tô nâng cao bảo mật VIN trong nền tảng xe kết nối trên AWS. Kiến trúc này:
+
+- Bảo vệ dữ liệu xe nhạy cảm
+- Duy trì đầy đủ chức năng
+- Khả năng mở rộng hiệu quả
+- Đáp ứng tiêu chuẩn tuân thủ
+- Cung cấp framework linh hoạt cho quản lý danh tính xe
+
+Khi số lượng xe kết nối ngày càng tăng, các biện pháp bảo mật mạnh mẽ trở nên vô cùng quan trọng. Hệ thống này không chỉ bảo vệ VIN mà còn giúp đáp ứng các yêu cầu về bảo vệ dữ liệu.
+
+Bạn nên tìm hiểu cách thức áp dụng phương pháp này vào các giải pháp xe kết nối của mình. Để biết thêm thông tin về các dịch vụ AWS IoT và các phương pháp hay nhất về xe kết nối, hãy truy cập tài liệu AWS IoT FleetWise và các bài đăng trên blog liên quan.
 
 ---
 
-## Hướng dẫn kiến trúc
-
-Thay đổi chính kể từ lần trình bày cuối cùng của kiến trúc tổng thể là việc tách dịch vụ đơn lẻ thành một tập hợp các dịch vụ nhỏ để cải thiện khả năng bảo trì và tính linh hoạt. Việc tích hợp một lượng lớn dữ liệu y tế khác nhau thường yêu cầu các trình kết nối chuyên biệt cho từng định dạng; bằng cách giữ chúng được đóng gói riêng biệt với microservices, chúng ta có thể thêm, xóa và sửa đổi từng trình kết nối mà không ảnh hưởng đến những kết nối khác. Các microservices được kết nối rời thông qua tin nhắn publish/subscribe tập trung trong cái mà tôi gọi là “pub/sub hub”.
-
-Giải pháp này đại diện cho những gì tôi sẽ coi là một lần lặp nước rút hợp lý khác từ last post của tôi. Phạm vi vẫn được giới hạn trong việc nhập và phân tích cú pháp đơn giản của các **HL7v2 messages** được định dạng theo **Quy tắc mã hóa 7 (ER7)** thông qua giao diện REST.
-
-**Kiến trúc giải pháp bây giờ như sau:**
-
-> *Hình 1. Kiến trúc tổng thể; những ô màu thể hiện những dịch vụ riêng biệt.*
-
----
-
-Mặc dù thuật ngữ *microservices* có một số sự mơ hồ cố hữu, một số đặc điểm là chung:  
-- Chúng nhỏ, tự chủ, kết hợp rời rạc  
-- Có thể tái sử dụng, giao tiếp thông qua giao diện được xác định rõ  
-- Chuyên biệt để giải quyết một việc  
-- Thường được triển khai trong **event-driven architecture**
-
-Khi xác định vị trí tạo ranh giới giữa các microservices, cần cân nhắc:  
-- **Nội tại**: công nghệ được sử dụng, hiệu suất, độ tin cậy, khả năng mở rộng  
-- **Bên ngoài**: chức năng phụ thuộc, tần suất thay đổi, khả năng tái sử dụng  
-- **Con người**: quyền sở hữu nhóm, quản lý *cognitive load*
-
----
-
-## Lựa chọn công nghệ và phạm vi giao tiếp
-
-| Phạm vi giao tiếp                        | Các công nghệ / mô hình cần xem xét                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Trong một microservice                   | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Giữa các microservices trong một dịch vụ | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Giữa các dịch vụ                         | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
-
----
-
-## The pub/sub hub
-
-Việc sử dụng kiến trúc **hub-and-spoke** (hay message broker) hoạt động tốt với một số lượng nhỏ các microservices liên quan chặt chẽ.  
-- Mỗi microservice chỉ phụ thuộc vào *hub*  
-- Kết nối giữa các microservice chỉ giới hạn ở nội dung của message được xuất  
-- Giảm số lượng synchronous calls vì pub/sub là *push* không đồng bộ một chiều
-
-Nhược điểm: cần **phối hợp và giám sát** để tránh microservice xử lý nhầm message.
-
----
-
-## Core microservice
-
-Cung cấp dữ liệu nền tảng và lớp truyền thông, gồm:  
-- **Amazon S3** bucket cho dữ liệu  
-- **Amazon DynamoDB** cho danh mục dữ liệu  
-- **AWS Lambda** để ghi message vào data lake và danh mục  
-- **Amazon SNS** topic làm *hub*  
-- **Amazon S3** bucket cho artifacts như mã Lambda
-
-> Chỉ cho phép truy cập ghi gián tiếp vào data lake qua hàm Lambda → đảm bảo nhất quán.
-
----
-
-## Front door microservice
-
-- Cung cấp API Gateway để tương tác REST bên ngoài  
-- Xác thực & ủy quyền dựa trên **OIDC** thông qua **Amazon Cognito**  
-- Cơ chế *deduplication* tự quản lý bằng DynamoDB thay vì SNS FIFO vì:
-  1. SNS deduplication TTL chỉ 5 phút
-  2. SNS FIFO yêu cầu SQS FIFO
-  3. Chủ động báo cho sender biết message là bản sao
-
----
-
-## Staging ER7 microservice
-
-- Lambda “trigger” đăng ký với pub/sub hub, lọc message theo attribute  
-- Step Functions Express Workflow để chuyển ER7 → JSON  
-- Hai Lambda:
-  1. Sửa format ER7 (newline, carriage return)
-  2. Parsing logic  
-- Kết quả hoặc lỗi được đẩy lại vào pub/sub hub
-
----
-
-## Tính năng mới trong giải pháp
-
-### 1. AWS CloudFormation cross-stack references
-Ví dụ *outputs* trong core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+**Nguồn:** AWS Blog  
+**Ngày:** 10 Tháng 9 Năm 2025  
+**Dịch bởi:** Dương Nguyễn Gia Huy
